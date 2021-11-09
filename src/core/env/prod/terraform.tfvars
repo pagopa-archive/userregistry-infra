@@ -4,8 +4,8 @@ env_short = "p"
 tags = {
   CreatedBy   = "Terraform"
   Environment = "Prod"
-  Owner       = "product"
-  Source      = "https://github.com/pagopa/product-infra"
+  Owner       = "usrreg"
+  Source      = "https://github.com/pagopa/usrreg-infra"
   CostCenter  = "TS310 - PAGAMENTI & SERVIZI"
 }
 
@@ -17,7 +17,7 @@ cidr_subnet_azdoa = ["10.1.130.0/24"]
 
 # dns
 external_domain = "pagopa.it"
-dns_zone_prefix = "product"
+dns_zone_prefix = "usrreg"
 
 # azure devops
 azdo_sp_tls_cert_enabled = false

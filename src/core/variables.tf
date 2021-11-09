@@ -2,7 +2,7 @@
 
 variable "prefix" {
   type    = string
-  default = "product"
+  default = "usrreg"
   validation {
     condition = (
       length(var.prefix) <= 6
