@@ -9,7 +9,7 @@ tags = {
   CostCenter  = "TS310 - PAGAMENTI & SERVIZI"
 }
 
-lock_enable = true
+lock_enable = false
 
 # networking
 cidr_vnet         = ["10.1.0.0/16"]
