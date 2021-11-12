@@ -12,12 +12,13 @@ tags = {
 
 lock_enable = false
 
-# key vault
+# 🔐 key vault
 key_vault_name = "usrreg-p-kv"
 
-# networking
-cidr_vnet         = ["10.1.0.0/16"]
-cidr_subnet_azdoa = ["10.1.130.0/24"]
+# ☁️ networking
+cidr_vnet               = ["10.1.0.0/16"]
+cidr_subnet_azdoa       = ["10.1.130.0/24"]
+cidr_subnet_appgateway  = ["10.1.128.0/24"]
 
 # dns
 external_domain = "pagopa.it"
@@ -28,11 +29,11 @@ azdo_sp_tls_cert_enabled = true
 enable_azdoa             = true
 enable_iac_pipeline      = true
 
-# apim
+# ❇️ app_gateway
+api_gateway_sku_name = "Standard_v2"
+api_gateway_sku_tier = "Standard_v2"
 
-
-# app_gateway
-
+app_gateway_api_certificate_name = "api-prod-usrreg-pagopa-it"
 
 # postgresql
 

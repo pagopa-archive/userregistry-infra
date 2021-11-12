@@ -5,8 +5,8 @@ set -e
 action=$1
 env=$2
 shift 2
-other=$@
-
+other="$*"
+subscription=""
 if [ -z "$action" ]; then
   echo "Missed action: init, apply, plan"
   exit 0
@@ -17,20 +17,24 @@ if [ -z "$env" ]; then
   exit 0
 fi
 
-source "./env/$env/backend.ini"
+# shellcheck source=/dev/null
+source "../env/$env/backend.ini"
+
 az account set -s "${subscription}"
 
-if echo "init plan apply refresh import output state taint destroy" | grep -w $action > /dev/null; then
-  if [ $action = "init" ]; then
-    terraform $action -backend-config="./env/$env/backend.tfvars" $other
-  elif [ $action = "output" ] || [ $action = "state" ] || [ $action = "taint" ]; then
+if echo "init plan apply refresh import output state taint destroy" | grep -w "$action" > /dev/null; then
+  if [ "$action" = "init" ]; then
+    terraform "$action" -backend-config="../env/$env/backend.tfvars" "$other"
+  elif [ "$action" = "output" ] || [ "$action" = "state" ] || [ "$action" = "taint" ]; then
     # init terraform backend
-    terraform init -reconfigure -backend-config="./env/$env/backend.tfvars"
-    terraform $action $other
+    terraform init -reconfigure -backend-config="../env/$env/backend.tfvars"
+    terraform "$action" "$other"
   else
     # init terraform backend
-    terraform init -reconfigure -backend-config="./env/$env/backend.tfvars"
-    terraform $action -var-file="./env/$env/terraform.tfvars" $other
+    echo "[INFO] init tf on env: ${env}"
+    terraform init -reconfigure -backend-config="../env/$env/backend.tfvars"
+    echo "[INFO] run tf with: ${action} on env: ${env} and other: >${other}<"
+    terraform "${action}" -var-file="../env/${env}/terraform.tfvars" $other
   fi
 else
     echo "Action not allowed."

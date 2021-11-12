@@ -39,13 +39,39 @@ variable "tags" {
   }
 }
 
-# network
+#
+# 🔐 Key Vault
+#
+variable "key_vault_name" {
+  type        = string
+  description = "Key Vault name"
+  default     = ""
+}
+
+variable "key_vault_rg_name" {
+  type        = string
+  default     = ""
+  description = "Key Vault - rg name"
+}
+
+# ☁️ network
 variable "cidr_vnet" {
   type        = list(string)
   description = "Virtual network address space."
 }
 
-# dns
+## Appgateway: Network
+variable "cidr_subnet_appgateway" {
+  type        = list(string)
+  description = "Application gateway address space."
+}
+
+variable "cidr_subnet_azdoa" {
+  type        = list(string)
+  description = "Azure DevOps agent network address space."
+}
+
+# 📇 dns
 variable "dns_default_ttl_sec" {
   type        = number
   description = "value"
@@ -64,7 +90,37 @@ variable "dns_zone_prefix" {
   description = "The dns subdomain."
 }
 
-# azure devops
+# ❇️ api gateway
+variable "api_gateway_sku_name" {
+  type        = string
+  description = "SKU Name of the App GW"
+  default     = "Standard_v2"
+}
+
+variable "api_gateway_sku_tier" {
+  type        = string
+  description = "SKU tier of the App GW"
+  default     = "Standard_v2"
+}
+
+## appgateway: Scaling
+
+variable "app_gateway_min_capacity" {
+  type    = number
+  default = 0
+}
+
+variable "app_gateway_max_capacity" {
+  type    = number
+  default = 2
+}
+
+variable "app_gateway_api_certificate_name" {
+  type        = string
+  description = "Application gateway api certificate name on Key Vault"
+}
+
+# 🚀 azure devops
 variable "azdo_sp_tls_cert_enabled" {
   type        = string
   description = "Enable Azure DevOps connection for TLS cert management"
@@ -74,11 +130,6 @@ variable "azdo_sp_tls_cert_enabled" {
 variable "enable_azdoa" {
   type        = bool
   description = "Enable Azure DevOps agent."
-}
-
-variable "cidr_subnet_azdoa" {
-  type        = list(string)
-  description = "Azure DevOps agent network address space."
 }
 
 variable "enable_iac_pipeline" {
