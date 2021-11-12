@@ -18,19 +18,3 @@ data "azurerm_key_vault_secret" "sec_storage_id" {
   name         = "sec-storage-id"
   key_vault_id = data.azurerm_key_vault.kv.id
 }
-
-data "azurerm_key_vault_certificate" "app_gw_platform" {
-  name         = var.app_gateway_api_certificate_name
-  key_vault_id = data.azurerm_key_vault.kv.id
-}
-
-#
-# App Gateway: user identity
-#
-resource "azurerm_user_assigned_identity" "appgateway" {
-  resource_group_name = data.azurerm_resource_group.rg_kv.name
-  location            = data.azurerm_resource_group.rg_kv.location
-  name                = format("%s-appgateway-identity", local.project)
-
-  tags = var.tags
-}
