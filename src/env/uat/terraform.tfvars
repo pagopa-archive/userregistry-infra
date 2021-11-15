@@ -54,5 +54,11 @@ postgres_configuration = {
 }
 postgres_alerts_enabled = false
 
-
-# apps
+#
+# 🚀 APP Service container
+#
+app_service_sku = {
+  tier     = "Standard"
+  size     = "S1"
+  capacity = 1
+}

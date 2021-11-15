@@ -309,6 +309,26 @@ EOD
   }
 }
 
+#
+# 🚀 APP Service container
+#
+variable "app_service_sku" {
+  type = object({
+    tier     = string
+    size     = string
+    capacity = number
+  })
+  default = {
+    tier     = ""
+    size     = ""
+    capacity = 0
+  }
+  description = "SKU used into app service"
+}
+
+#
+# Locals
+#
 locals {
   monitor_rg = format("%s-monitor-rg", local.project)
   monitor_action_group_slack_name = "SlackPagoPA"
