@@ -21,6 +21,7 @@ cidr_vnet               = ["10.1.0.0/16"]
 cidr_subnet_azdoa       = ["10.1.130.0/24"]
 cidr_subnet_postgres    = ["10.1.129.0/24"]
 cidr_subnet_appgateway  = ["10.1.128.0/24"]
+cidr_subnet_apim        = ["10.1.136.0/24"]
 
 # dns
 external_domain = "pagopa.it"
@@ -64,3 +65,9 @@ app_service_sku = {
   size     = "S1"
   capacity = 1
 }
+
+#
+# 🗺 APIM
+#
+apim_publisher_name = "pagoPA SelfCare DEV"
+apim_sku            = "Developer_1"
