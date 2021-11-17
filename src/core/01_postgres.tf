@@ -10,7 +10,7 @@ data "azurerm_key_vault_secret" "postgres_administrator_login_password" {
   key_vault_id = data.azurerm_key_vault.kv.id
 }
 
-# 🔭 monitor
+# 🔭 monitor action groups
 
 data "azurerm_monitor_action_group" "slack" {
   resource_group_name = local.monitor_rg
