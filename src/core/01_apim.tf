@@ -110,3 +110,19 @@ resource "azurerm_api_management_custom_domain" "api_custom_domain" {
     )
   }
 }
+
+data "azurerm_private_dns_zone" "internal" {
+  name                = join(".", ["internal", var.dns_zone_prefix, var.external_domain])
+  resource_group_name = data.azurerm_resource_group.rg_vnet.name
+}
+
+# api.internal.*.userregistry.pagopa.it
+resource "azurerm_private_dns_a_record" "api_internal" {
+  name                = "api"
+  zone_name           = data.azurerm_private_dns_zone.internal.name
+  resource_group_name = data.azurerm_resource_group.rg_vnet.name
+  ttl                 = var.dns_default_ttl_sec
+  records             = module.apim.*.private_ip_addresses[0]
+
+  tags = var.tags
+}
