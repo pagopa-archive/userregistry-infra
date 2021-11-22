@@ -76,6 +76,12 @@ variable "cidr_subnet_postgres" {
   description = "Database network address space."
 }
 
+variable "cidr_subnet_apim" {
+  type        = list(string)
+  description = "Address prefixes subnet api management."
+  default     = null
+}
+
 # 📇 dns
 variable "dns_default_ttl_sec" {
   type        = number
@@ -327,6 +333,22 @@ variable "app_service_sku" {
 }
 
 #
+# 🗺 APIM
+#
+
+variable "apim_publisher_name" {
+  type = string
+  default = ""
+  description = "Apim publisher name"
+}
+
+variable "apim_sku" {
+  type = string
+  default = "Developer_1"
+  description = "APIM SKU type"
+}
+
+#
 # Locals
 #
 locals {
@@ -334,4 +356,3 @@ locals {
   monitor_action_group_slack_name = "SlackPagoPA"
   monitor_action_group_email_name = "PagoPA"
 }
-
