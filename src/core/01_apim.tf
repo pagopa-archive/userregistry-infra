@@ -30,16 +30,6 @@ locals {
   apim_cert_name_proxy_endpoint = format("%s-proxy-endpoint-cert", local.project)
 
   api_domain = format("api.%s.%s", var.dns_zone_prefix, var.external_domain)
-
-  origins = {
-    base = concat(
-              [
-                format("https://api.%s.%s", var.dns_zone_prefix, var.external_domain),
-                format("https://%s.%s", var.dns_zone_prefix, var.external_domain),
-               ],
-               var.env_short != "p"? ["https://localhost:3000","http://localhost:3000","https://localhost:3001","http://localhost:3001"]:[]
-            )
-  }
 }
 
 ###########################
@@ -88,15 +78,15 @@ module "apim" {
 #   ]
 }
 
-# resource "azurerm_api_management_custom_domain" "api_custom_domain" {
-#   api_management_id = module.apim.id
+resource "azurerm_api_management_custom_domain" "api_custom_domain" {
+  api_management_id = module.apim.id
 
-#   proxy {
-#     host_name = local.api_domain
-#     key_vault_id = replace(
-#     data.azurerm_key_vault_certificate.app_gw_platform.secret_id,
-#     "/${data.azurerm_key_vault_certificate.app_gw_platform.version}",
-#     ""
-#     )
-#   }
-# }
+  proxy {
+    host_name = local.api_domain
+    key_vault_id = replace(
+    data.azurerm_key_vault_certificate.app_gw_platform.secret_id,
+    "/${data.azurerm_key_vault_certificate.app_gw_platform.version}",
+    ""
+    )
+  }
+}
