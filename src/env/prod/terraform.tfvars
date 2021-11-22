@@ -18,13 +18,9 @@ key_vault_name = "usrreg-u-kv"
 # ☁️ networking
 cidr_vnet               = ["10.1.0.0/16"]
 cidr_subnet_azdoa       = ["10.1.130.0/24"]
-<<<<<<< HEAD
-cidr_subnet_appgateway  = ["10.1.128.0/24"]
-=======
 cidr_subnet_postgres    = ["10.1.129.0/24"]
 cidr_subnet_appgateway  = ["10.1.128.0/24"]
 cidr_subnet_apim        = ["10.1.136.0/24"]
->>>>>>> origin/main
 
 # dns
 external_domain = "pagopa.it"
