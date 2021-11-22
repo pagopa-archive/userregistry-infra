@@ -76,8 +76,28 @@ module "apim" {
 #     azurerm_application_insights.application_insights,
 #     module.redis
 #   ]
+
 }
 
+#
+# 🔐 Key Vault Access Policies
+#
+
+## api management policy ##
+resource "azurerm_key_vault_access_policy" "api_management_policy" {
+  key_vault_id = data.azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = module.apim.principal_id
+
+  key_permissions         = []
+  secret_permissions      = ["Get", "List"]
+  certificate_permissions = ["Get", "List"]
+  storage_permissions     = []
+}
+
+#
+# 🏷 custom domain
+#
 resource "azurerm_api_management_custom_domain" "api_custom_domain" {
   api_management_id = module.apim.id
 
