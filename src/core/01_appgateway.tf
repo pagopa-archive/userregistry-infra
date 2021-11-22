@@ -1,3 +1,22 @@
+# resource "azurerm_user_assigned_identity" "appgateway" {
+#   resource_group_name = azurerm_resource_group.sec_rg.name
+#   location            = azurerm_resource_group.sec_rg.location
+#   name                = format("%s-appgateway-identity", local.project)
+
+#   tags = var.tags
+# }
+
+# ## user assined identity: (application gateway) ##
+# resource "azurerm_key_vault_access_policy" "app_gateway_policy" {
+#   key_vault_id            = data.azurerm_key_vault.kv.id
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   object_id               = azurerm_user_assigned_identity.appgateway.principal_id
+#   key_permissions         = ["Get", "List"]
+#   secret_permissions      = ["Get", "List"]
+#   certificate_permissions = ["Get", "List", "Purge"]
+#   storage_permissions     = []
+# }
+
 # #--------------------------------------------------------------------------------------------------
 
 # #
