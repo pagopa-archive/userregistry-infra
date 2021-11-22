@@ -36,7 +36,7 @@ enable_iac_pipeline      = true
 api_gateway_sku_name = "Standard_v2"
 api_gateway_sku_tier = "Standard_v2"
 
-app_gateway_api_certificate_name = "api-dev-usrreg-pagopa-it"
+app_gateway_api_certificate_name = "api-dev-userregistry-pagopa-it"
 
 # 🗄 postgresql
 postgres_sku_name       = "GP_Gen5_2"

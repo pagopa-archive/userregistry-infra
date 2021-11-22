@@ -35,7 +35,7 @@ enable_iac_pipeline      = true
 api_gateway_sku_name = "WAF_v2"
 api_gateway_sku_tier = "WAF_v2"
 
-app_gateway_api_certificate_name = "api-uat-usrreg-pagopa-it"
+app_gateway_api_certificate_name = "api-uat-userregistry-pagopa-it"
 
 # 🗄 postgresql
 postgres_sku_name       = "GP_Gen5_2"
