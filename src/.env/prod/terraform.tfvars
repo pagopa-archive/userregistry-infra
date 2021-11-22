@@ -31,9 +31,12 @@ enable_azdoa             = true
 enable_iac_pipeline      = true
 
 # ❇️ app_gateway
-api_gateway_sku_name = "Standard_v2"
-api_gateway_sku_tier = "Standard_v2"
+app_gateway_sku_name = "Standard_v2"
+app_gateway_sku_tier = "Standard_v2"
 app_gateway_api_certificate_name = "api-prod-userregistry-pagopa-it"
+
+app_gateway_alerts_enabled=false
+app_gateway_waf_enabled=false
 
 # 🗄 postgresql
 postgres_sku_name       = "GP_Gen5_2"

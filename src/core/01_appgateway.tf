@@ -11,7 +11,7 @@ resource "azurerm_public_ip" "appgateway_public_ip" {
 
 # Subnet to host the application gateway
 module "appgateway_snet" {
-  source               = "git::https://github.com/pagopa/azurerm.git//subnet?ref=v1.0.84"
+  source               = "git::https://github.com/pagopa/azurerm.git//subnet?ref=v1.0.90"
   name                 = format("%s-appgateway-snet", local.project)
   address_prefixes     = var.cidr_subnet_appgateway
   resource_group_name  = data.azurerm_resource_group.rg_vnet.name
@@ -20,15 +20,18 @@ module "appgateway_snet" {
 
 ## Application gateway ##
 module "app_gw" {
-  source = "git::https://github.com/pagopa/azurerm.git//app_gateway?ref=v1.0.87"
+  source = "git::https://github.com/pagopa/azurerm.git//app_gateway?ref=v1.0.90"
 
   resource_group_name = data.azurerm_resource_group.rg_vnet.name
   location            = data.azurerm_resource_group.rg_vnet.location
   name                = format("%s-app-gw", local.project)
 
   # SKU
-  sku_name = var.api_gateway_sku_name
-  sku_tier = var.api_gateway_sku_tier
+  sku_name = var.app_gateway_sku_name
+  sku_tier = var.app_gateway_sku_tier
+
+  # WAF
+  waf_enabled = var.app_gateway_waf_enabled
 
   # Networking
   subnet_id    = module.appgateway_snet.id
@@ -39,34 +42,34 @@ module "app_gw" {
 
     apim = {
       protocol                    = "Https"
-      host                        = "api-internal.io.italia.it"
+      host                        = "api.internal.dev.userregistry.pagopa.it"
       port                        = 443
       ip_addresses                = null # with null value use fqdns
-      fqdns                       = ["api-internal.io.italia.it"]
+      fqdns                       = ["api.internal.dev.userregistry.pagopa.it"]
       probe                       = "/status-0123456789abcdef"
       probe_name                  = "probe-apim"
-      request_timeout             = 180
+      request_timeout             = 2
       pick_host_name_from_backend = false
     }
   }
 
-  ssl_profiles = [{
-    name                             = format("%s-api-mtls-profile", local.project)
-    trusted_client_certificate_names = [format("%s-issuer-chain", var.prefix)]
-    verify_client_cert_issuer_dn     = true
-    ssl_policy = {
-      disabled_protocols = []
-      policy_type        = "Custom"
-      policy_name        = "" # with Custom type set empty policy_name (not required by the provider)
-      cipher_suites = [
-        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-        "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
-        "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
-      ]
-      min_protocol_version = "TLSv1_2"
-    }
-  }]
+  # ssl_profiles = [{
+  #   name                             = format("%s-api-mtls-profile", local.project)
+  #   trusted_client_certificate_names = [format("%s-issuer-chain", var.prefix)]
+  #   verify_client_cert_issuer_dn     = true
+  #   ssl_policy = {
+  #     disabled_protocols = []
+  #     policy_type        = "Custom"
+  #     policy_name        = "" # with Custom type set empty policy_name (not required by the provider)
+  #     cipher_suites = [
+  #       "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+  #       "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+  #       "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+  #       "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+  #     ]
+  #     min_protocol_version = "TLSv1_2"
+  #   }
+  # }]
 
   trusted_client_certificates = []
 
@@ -137,11 +140,11 @@ module "app_gw" {
 
   action = [
     {
-      action_group_id    = azurerm_monitor_action_group.slack.id
+      action_group_id    = data.azurerm_monitor_action_group.slack.id
       webhook_properties = null
     },
     {
-      action_group_id    = azurerm_monitor_action_group.email.id
+      action_group_id    = data.azurerm_monitor_action_group.email.id
       webhook_properties = null
     }
   ]
@@ -259,15 +262,15 @@ module "app_gw" {
 
 ## user assined identity: (application gateway) ##
 resource "azurerm_user_assigned_identity" "appgateway" {
-  resource_group_name = azurerm_resource_group.sec_rg.name
-  location            = azurerm_resource_group.sec_rg.location
+  resource_group_name = data.azurerm_resource_group.kv_rg.name
+  location            = data.azurerm_resource_group.kv_rg.location
   name                = format("%s-appgateway-identity", local.project)
 
   tags = var.tags
 }
 
 resource "azurerm_key_vault_access_policy" "app_gateway_policy" {
-  key_vault_id            = module.key_vault.id
+  key_vault_id            = data.azurerm_key_vault.kv.id
   tenant_id               = data.azurerm_client_config.current.tenant_id
   object_id               = azurerm_user_assigned_identity.appgateway.principal_id
   key_permissions         = []
@@ -278,7 +281,7 @@ resource "azurerm_key_vault_access_policy" "app_gateway_policy" {
 
 data "azurerm_key_vault_certificate" "app_gw_api" {
   name         = var.app_gateway_api_certificate_name
-  key_vault_id = module.key_vault.id
+  key_vault_id = data.azurerm_key_vault.kv.id
 }
 
 # resource "azurerm_web_application_firewall_policy" "api" {

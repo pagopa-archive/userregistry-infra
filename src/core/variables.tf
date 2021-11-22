@@ -102,18 +102,29 @@ variable "dns_zone_prefix" {
 }
 
 # ❇️ api gateway
-variable "api_gateway_sku_name" {
+variable "app_gateway_sku_name" {
   type        = string
   description = "SKU Name of the App GW"
   default     = "Standard_v2"
 }
 
-variable "api_gateway_sku_tier" {
+variable "app_gateway_sku_tier" {
   type        = string
   description = "SKU tier of the App GW"
   default     = "Standard_v2"
 }
 
+variable "app_gateway_alerts_enabled" {
+  type        = bool
+  description = "Enable alerts"
+  default     = false
+}
+
+variable "app_gateway_waf_enabled" {
+  type        = bool
+  description = "Enable WAF"
+  default     = false
+}
 ## appgateway: Scaling
 
 variable "app_gateway_min_capacity" {
