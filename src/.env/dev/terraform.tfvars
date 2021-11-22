@@ -22,8 +22,8 @@ cidr_subnet_appgateway  = ["10.1.128.0/24"]
 cidr_subnet_apim        = ["10.1.136.0/24"]
 
 # dns
-external_domain = "pagopa.it"
 dns_zone_prefix = "dev.userregistry"
+external_domain = "pagopa.it"
 
 # azure devops
 azdo_sp_tls_cert_enabled = true
