@@ -53,24 +53,6 @@ module "app_gw" {
     }
   }
 
-  # ssl_profiles = [{
-  #   name                             = format("%s-api-mtls-profile", local.project)
-  #   trusted_client_certificate_names = [format("%s-issuer-chain", var.prefix)]
-  #   verify_client_cert_issuer_dn     = true
-  #   ssl_policy = {
-  #     disabled_protocols = []
-  #     policy_type        = "Custom"
-  #     policy_name        = "" # with Custom type set empty policy_name (not required by the provider)
-  #     cipher_suites = [
-  #       "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-  #       "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-  #       "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
-  #       "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
-  #     ]
-  #     min_protocol_version = "TLSv1_2"
-  #   }
-  # }]
-
   trusted_client_certificates = []
 
   # Configure listeners
