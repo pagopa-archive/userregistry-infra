@@ -29,3 +29,8 @@ data "azurerm_key_vault_certificate" "app_gw_platform" {
   key_vault_id = data.azurerm_key_vault.kv.id
 }
 
+data "azurerm_key_vault_certificate" "apim_internal" {
+  name         = var.apim_api_internal_certificate_name
+  key_vault_id = data.azurerm_key_vault.kv.id
+}
+

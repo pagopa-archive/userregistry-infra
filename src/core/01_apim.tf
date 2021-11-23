@@ -25,13 +25,6 @@ module "apim_snet" {
   service_endpoints                              = ["Microsoft.Web"]
 }
 
-
-locals {
-  apim_cert_name_proxy_endpoint = format("%s-proxy-endpoint-cert", local.project)
-
-  api_domain = format("api.%s.%s", var.dns_zone_prefix, var.external_domain)
-}
-
 ###########################
 ## Api Management (apim) ##
 ###########################
@@ -104,8 +97,8 @@ resource "azurerm_api_management_custom_domain" "api_custom_domain" {
   proxy {
     host_name = local.api_domain
     key_vault_id = replace(
-    data.azurerm_key_vault_certificate.app_gw_platform.secret_id,
-    "/${data.azurerm_key_vault_certificate.app_gw_platform.version}",
+    data.azurerm_key_vault_certificate.apim_internal.secret_id,
+    "/${data.azurerm_key_vault_certificate.apim_internal.version}",
     ""
     )
   }

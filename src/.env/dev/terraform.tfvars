@@ -71,3 +71,5 @@ app_service_sku = {
 #
 apim_publisher_name = "pagoPA SelfCare DEV"
 apim_sku            = "Developer_1"
+apim_api_internal_certificate_name = "api-internal-dev-userregistry-pagopa-it"
+

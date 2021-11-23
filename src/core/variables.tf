@@ -359,6 +359,11 @@ variable "apim_sku" {
   description = "APIM SKU type"
 }
 
+variable "apim_api_internal_certificate_name" {
+  type        = string
+  description = "KeyVault certificate name"
+}
+
 #
 # Locals
 #
@@ -366,4 +371,6 @@ locals {
   monitor_rg = format("%s-monitor-rg", local.project)
   monitor_action_group_slack_name = "SlackPagoPA"
   monitor_action_group_email_name = "PagoPA"
+
+  api_domain = format("api.internal.%s.%s", var.dns_zone_prefix, var.external_domain)
 }
