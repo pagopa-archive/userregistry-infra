@@ -95,7 +95,7 @@ resource "azurerm_api_management_custom_domain" "api_custom_domain" {
   api_management_id = module.apim.id
 
   proxy {
-    host_name = local.api_domain
+    host_name = local.api_internal_domain
     key_vault_id = replace(
     data.azurerm_key_vault_certificate.apim_internal.secret_id,
     "/${data.azurerm_key_vault_certificate.apim_internal.version}",

@@ -372,5 +372,6 @@ locals {
   monitor_action_group_slack_name = "SlackPagoPA"
   monitor_action_group_email_name = "PagoPA"
 
-  api_domain = format("api.internal.%s.%s", var.dns_zone_prefix, var.external_domain)
+  # api.internal.*.userregistry.pagopa.it
+  api_internal_domain = format("api.internal.%s.%s", var.dns_zone_prefix, var.external_domain)
 }
