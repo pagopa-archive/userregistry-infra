@@ -1,69 +1,73 @@
-#!/usr/bin/env bash
-
-#
-# Apply the configuration relative to a given subscription
-# Subscription are defined in ./subscription
-# Usage:
-#  ./terraform.sh apply|destroy|plan ENV-SelfCare
-#
-#  ./terraform.sh apply DEV-SelfCare
-#  ./terraform.sh apply UAT-SelfCare
-#  ./terraform.sh apply PROD-SelfCare
-
-BASHDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-WORKDIR="$BASHDIR"
+#!/bin/bash
 
 set -e
 
-COMMAND=$1
-SUBSCRIPTION=$2
+SCRIPT_PATH="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+CURRENT_DIRECTORY="$(basename "$SCRIPT_PATH")"
+ACTION=$1
+ENV=$2
 shift 2
-other=$@
+other="$*"
+# must be subscription in lower case
+subscription=""
+BACKEND_CONFIG_PATH="../.env/${ENV}/${CURRENT_DIRECTORY}_state.tfvars"
 
-if [ -z "${SUBSCRIPTION}" ]; then
-    printf "\e[1;31mYou must provide a subscription as first argument.\n"
-    exit 1
+echo "[INFO] This is the current directory: ${CURRENT_DIRECTORY}"
+
+if [ -z "$ACTION" ]; then
+  echo "[ERROR] Missed ACTION: init, apply, plan"
+  exit 0
 fi
 
-if [ ! -d "${WORKDIR}/subscriptions/${SUBSCRIPTION}" ]; then
-    printf "\e[1;31mYou must provide a subscription for which a variable file is defined. You provided: '%s'.\n" "${SUBSCRIPTION}" > /dev/stderr
-    exit 1
+if [ -z "$ENV" ]; then
+  echo "[ERROR] ENV should be: dev, uat or prod."
+  exit 0
 fi
 
-az account set -s "${SUBSCRIPTION}"
+#
+# 🏁 Source & init shell
+#
 
-# shellcheck disable=SC1090
-source "${WORKDIR}/subscriptions/${SUBSCRIPTION}/backend.ini"
-source "${WORKDIR}/subscriptions/${SUBSCRIPTION}/.bastianhost.ini"
+# shellcheck source=/dev/null
+source "../.env/$ENV/backend.ini"
 
-# shellcheck disable=SC2154
-printf "Subscription: %s\n" "${SUBSCRIPTION}"
-printf "Resource Group Name: %s\n" "${resource_group_name}"
-printf "Storage Account Name: %s\n" "${storage_account_name}"
-
-export TF_VAR_k8s_apiserver_port="443"
-export TF_VAR_k8s_apiserver_host="${aks_private_fqdn}"
-export TF_VAR_k8s_kube_config_path="${kube_config_path}"
-
-# init terraform backend
-terraform init -reconfigure \
-    -backend-config="storage_account_name=${storage_account_name}" \
-    -backend-config="resource_group_name=${resource_group_name}"
+# Subscription set
+az account set -s "${subscription}"
 
 # if using cygwin, we have to transcode the WORKDIR
 if [[ $WORKDIR == /cygdrive/* ]]; then
   WORKDIR=$(cygpath -w $WORKDIR)
 fi
 
-
+# Helm
 export HELM_DEBUG=1
-if echo "plan apply refresh import output destroy" | grep -w ${COMMAND} > /dev/null; then
-  if [ ${COMMAND} = "output" ]; then
-    terraform ${COMMAND} $other
+
+#
+# 🌎 Terraform
+#
+if echo "init plan apply refresh import output state taint destroy" | grep -w "$ACTION" > /dev/null; then
+  if [ "$ACTION" = "init" ]; then
+    echo "[INFO] init tf on ENV: ${ENV}"
+    terraform "$ACTION" -backend-config="${BACKEND_CONFIG_PATH}" "$other"
+  elif [ "$ACTION" = "output" ] || [ "$ACTION" = "state" ] || [ "$ACTION" = "taint" ]; then
+    # init terraform backend
+    terraform init -reconfigure -backend-config="${BACKEND_CONFIG_PATH}"
+    terraform "$ACTION" "$other"
   else
-    terraform ${COMMAND} --var-file="${WORKDIR}/subscriptions/${SUBSCRIPTION}/terraform.tfvars" $other
+    # init terraform backend
+    echo "[INFO] init tf on ENV: ${ENV}"
+    terraform init \
+    -reconfigure \
+    -backend-config="${BACKEND_CONFIG_PATH}"
+
+    echo "[INFO] run tf with: ${ACTION} on ENV: ${ENV} and other: >${other}<"
+    terraform "${ACTION}" \
+    -var-file="../.env/${ENV}/terraform.tfvars" \
+    -var-file="../.env/${ENV}/kubernetes.tfvars" \
+    -compact-warnings \
+    $other
   fi
 else
-    echo "Action not allowed."
+    echo "[ERROR] ACTION not allowed."
     exit 1
 fi

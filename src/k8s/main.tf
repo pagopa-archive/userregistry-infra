@@ -1,28 +1,24 @@
 terraform {
-  required_version = ">=0.15.3"
-
-  backend "azurerm" {
-    container_name = "k8sstate"
-    key            = "terraform.tfstate"
-  }
-
+  required_version = ">=1.0.6"
   required_providers {
     azurerm = {
-      version = "= 2.79.1"
+      version = "= 2.86.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "= 2.5.0"
+      version = "= 2.10.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.3.2"
+      version = ">= 2.6.1"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2.2.0"
+      version = ">= 2.4.1"
     }
   }
+
+  backend "azurerm" {}
 }
 
 provider "kubernetes" {
