@@ -58,17 +58,21 @@ postgres_configuration = {
 postgres_alerts_enabled = false
 
 #
-# 🚀 APP Service container
-#
-app_service_sku = {
-  tier     = "Standard"
-  size     = "S1"
-  capacity = 1
-}
-
-#
 # 🗺 APIM
 #
 apim_publisher_name = "pagoPA SelfCare DEV"
 apim_sku            = "Developer_1"
 apim_api_internal_certificate_name = "api-internal-uat-userregistry-pagopa-it"
+
+#
+# AKS
+#
+aks_private_cluster_enabled = false
+aks_alerts_enabled          = false
+# This is the k8s ingress controller ip. It must be in the aks subnet range.
+reverse_proxy_ip            = "10.1.0.250"
+aks_max_pods                = 100
+aks_enable_auto_scaling     = false
+aks_node_min_count          = null
+aks_node_max_count          = null
+aks_vm_size                 = "Standard_D4s_v3"

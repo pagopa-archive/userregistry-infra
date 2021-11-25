@@ -363,6 +363,12 @@ variable "aks_private_cluster_enabled" {
   default     = false
 }
 
+variable "aks_num_outbound_ips" {
+  type        = number
+  default     = 1
+  description = "How many outbound ips allocate for AKS cluster"
+}
+
 variable "aks_availability_zones" {
   type        = list(number)
   description = "A list of Availability Zones across which the Node Pool should be spread."

@@ -1,3 +1,10 @@
+data "azurerm_public_ip" "aks_outbound" {
+  count               = var.aks_num_outbound_ips
+
+  resource_group_name = data.azurerm_resource_group.rg_vnet.name
+  name                = format("%s-aksoutbound-pip-%02d", local.project, count.index + 1)
+}
+
 resource "azurerm_resource_group" "rg_aks" {
   name     = format("%s-aks-rg", local.project)
   location = var.location
@@ -9,9 +16,9 @@ module "k8s_snet" {
   source                                         = "git::https://github.com/pagopa/azurerm.git//subnet?ref=v1.0.91"
   name                                           = format("%s-k8s-snet", local.project)
   address_prefixes                               = var.cidr_subnet_k8s
-  resource_group_name                            = azurerm_resource_group.rg_vnet.name
-  virtual_network_name                           = module.vnet.name
-  enforce_private_link_endpoint_network_policies = true
+  resource_group_name                            = data.azurerm_resource_group.rg_vnet.name
+  virtual_network_name                           = data.azurerm_virtual_network.vnet.name
+  enforce_private_link_endpoint_network_policies = var.aks_private_cluster_enabled
 
   service_endpoints = [
     "Microsoft.Web",
@@ -28,7 +35,7 @@ module "aks" {
   resource_group_name         = azurerm_resource_group.rg_aks.name
   availability_zones          = var.aks_availability_zones
   kubernetes_version          = var.kubernetes_version
-  log_analytics_workspace_id  = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id  = data.azurerm_log_analytics_workspace.log_analytics_workspace.id
 
   vm_size                     = var.aks_vm_size
   enable_auto_scaling         = var.aks_enable_auto_scaling
@@ -69,7 +76,7 @@ module "aks" {
 
   alerts_enabled = var.aks_alerts_enabled
 
-  outbound_ip_address_ids = azurerm_public_ip.aks_outbound.*.id
+  outbound_ip_address_ids = data.azurerm_public_ip.aks_outbound.*.id
 
   tags = var.tags
 }
