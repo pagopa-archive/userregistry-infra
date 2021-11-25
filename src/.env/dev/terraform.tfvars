@@ -1,6 +1,6 @@
 # general
 env_short = "d"
-location = "germanywestcentral"
+location  = "germanywestcentral"
 
 tags = {
   CreatedBy   = "Terraform"
@@ -17,8 +17,9 @@ key_vault_name    = "usrreg-d-kv"
 key_vault_rg_name = "usrreg-d-sec-rg"
 
 # networking
-cidr_vnet         = ["10.1.0.0/16"]
-cidr_subnet_azdoa = ["10.1.130.0/24"]
+cidr_vnet            = ["10.1.0.0/16"]
+cidr_subnet_postgres = ["10.1.129.0/24"]
+cidr_subnet_azdoa    = ["10.1.130.0/24"]
 
 # dns
 external_domain = "pagopa.it"
@@ -35,7 +36,16 @@ enable_iac_pipeline      = true
 # app_gateway
 
 
-# postgresql
-
+# postgres
+postgres_private_endpoint_enabled      = false
+postgres_sku_name                      = "B_Gen5_1"
+postgres_public_network_access_enabled = false
+postgres_network_rules = {
+  ip_rules = [
+    "0.0.0.0/0"
+  ]
+  # dblink
+  allow_access_to_azure_services = false
+}
 
 # apps

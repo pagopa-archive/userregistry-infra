@@ -1,6 +1,6 @@
 # general
 env_short = "p"
-location = "westeurope"
+location  = "westeurope"
 
 tags = {
   CreatedBy   = "Terraform"
@@ -16,17 +16,17 @@ lock_enable = true
 key_vault_name = "usrreg-u-kv"
 
 # networking
-cidr_vnet         = ["10.1.0.0/16"]
-cidr_subnet_azdoa = ["10.1.130.0/24"]
+cidr_vnet            = ["10.1.0.0/16"]
+cidr_subnet_postgres = ["10.1.129.0/24"]
+cidr_subnet_azdoa    = ["10.1.130.0/24"]
 
 # dns
 external_domain = "pagopa.it"
 dns_zone_prefix = "userregistry"
 
 # azure devops
-azdo_sp_tls_cert_enabled = true
-enable_azdoa             = true
-enable_iac_pipeline      = true
+enable_azdoa        = true
+enable_iac_pipeline = true
 
 # apim
 
@@ -34,7 +34,10 @@ enable_iac_pipeline      = true
 # app_gateway
 
 
-# postgresql
-
+# postgres
+postgres_private_endpoint_enabled      = true
+postgres_sku_name                      = "GP_Gen5_2"
+postgres_public_network_access_enabled = false
+postgres_geo_redundant_backup_enabled  = true
 
 # apps
