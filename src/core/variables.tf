@@ -355,7 +355,7 @@ variable "apim_api_internal_certificate_name" {
 }
 
 #
-# 🗂 AKS 
+# ⛴ AKS 
 #
 variable "aks_private_cluster_enabled" {
   type        = bool

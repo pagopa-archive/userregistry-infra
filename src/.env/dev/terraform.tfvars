@@ -65,7 +65,7 @@ apim_sku            = "Developer_1"
 apim_api_internal_certificate_name = "api-internal-dev-userregistry-pagopa-it"
 
 #
-# AKS
+# ⛴ AKS
 #
 aks_private_cluster_enabled = false
 aks_alerts_enabled          = false

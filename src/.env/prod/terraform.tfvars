@@ -23,7 +23,7 @@ cidr_subnet_apim        = ["10.1.136.0/24"]
 
 # dns
 external_domain = "pagopa.it"
-dns_zone_prefix = "userregistry"
+dns_zone_prefix = "prod.userregistry"
 
 # azure devops
 enable_azdoa             = true
@@ -51,7 +51,7 @@ apim_sku            = "Developer_1" # TODO change to Premium_1
 apim_api_internal_certificate_name = "api-internal-userregistry-pagopa-it"
 
 #
-# AKS
+# ⛴ AKS
 #
 aks_private_cluster_enabled = true
 aks_alerts_enabled          = true
