@@ -4,8 +4,8 @@ location = "germanywestcentral"
 tags = {
   CreatedBy   = "Terraform"
   Environment = "Dev"
-  Owner       = "usrreg"
-  Source      = "https://github.com/pagopa/usrreg-infra"
+  Owner       = "UserRegistry"
+  Source      = "https://github.com/pagopa/userregistry-infra"
   CostCenter  = "TS310 - PAGAMENTI & SERVIZI"
 }
 lock_enable = false
@@ -27,7 +27,6 @@ dns_zone_prefix = "dev.userregistry"
 external_domain = "pagopa.it"
 
 # azure devops
-azdo_sp_tls_cert_enabled = true
 enable_azdoa             = true
 enable_iac_pipeline      = true
 
@@ -61,7 +60,7 @@ postgres_alerts_enabled = false
 #
 # 🗺 APIM
 #
-apim_publisher_name = "pagoPA SelfCare DEV"
+apim_publisher_name = "PagoPA SelfCare DEV"
 apim_sku            = "Developer_1"
 apim_api_internal_certificate_name = "api-internal-dev-userregistry-pagopa-it"
 
