@@ -159,3 +159,12 @@ variable "key_vault_rg_name" {
   default     = ""
   description = "Key Vault - rg name"
 }
+
+#
+# AKS
+#
+variable "aks_num_outbound_ips" {
+  type        = number
+  default     = 1
+  description = "How many outbound ips allocate for AKS cluster"
+}
