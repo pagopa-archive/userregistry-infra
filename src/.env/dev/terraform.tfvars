@@ -1,5 +1,6 @@
 # general
 env_short = "d"
+env       = "dev"
 location = "germanywestcentral"
 tags = {
   CreatedBy   = "Terraform"
