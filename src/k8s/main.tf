@@ -21,19 +21,24 @@ terraform {
   backend "azurerm" {}
 }
 
-provider "kubernetes" {
-  host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
-  insecure    = var.k8s_apiserver_insecure
-  config_path = var.k8s_kube_config_path
+data "azurerm_kubernetes_cluster" "aks_cluster" {
+  name                = "usrreg-d-aks"
+  resource_group_name = "usrreg-d-aks-rg"
 }
 
-provider "helm" {
-  kubernetes {
-    host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
-    insecure    = var.k8s_apiserver_insecure
-    config_path = var.k8s_kube_config_path
-  }
+provider "kubernetes" {
+  # host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
+  insecure    = var.k8s_apiserver_insecure
+  config_path = "${var.k8s_kube_config_path_prefix}/config-${data.azurerm_kubernetes_cluster.aks_cluster.name}"
 }
+
+# provider "helm" {
+#   kubernetes {
+#     host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
+#     insecure    = var.k8s_apiserver_insecure
+#     config_path = var.k8s_kube_config_path
+#   }
+# }
 
 provider "azurerm" {
   features {}

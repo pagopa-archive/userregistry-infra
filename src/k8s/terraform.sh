@@ -36,7 +36,7 @@ az account set -s "${subscription}"
 
 # if using cygwin, we have to transcode the WORKDIR
 if [[ $WORKDIR == /cygdrive/* ]]; then
-  WORKDIR=$(cygpath -w $WORKDIR)
+  WORKDIR=$(cygpath -w "$WORKDIR")
 fi
 
 # Helm
