@@ -90,7 +90,7 @@ resource "azurerm_resource_group" "data_rg" {
 
 ## Database subnet
 module "postgres_snet" {
-  source                                         = "git::https://github.com/pagopa/azurerm.git//subnet?ref=v1.0.84"
+  source                                         = "git::https://github.com/pagopa/azurerm.git//subnet?ref=v2.0.2"
   name                                           = format("%s-postgres-snet", local.project)
   address_prefixes                               = var.cidr_subnet_postgres
   resource_group_name                            = azurerm_resource_group.rg_vnet.name

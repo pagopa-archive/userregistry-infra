@@ -13,7 +13,7 @@ tags = {
 lock_enable = false
 
 # 🔐 key vault
-key_vault_name    = "usrreg-d-kv"
+key_vault_name    = "usrreg-d-kv-common"
 key_vault_rg_name = "usrreg-d-sec-rg"
 
 # ☁️ networking
