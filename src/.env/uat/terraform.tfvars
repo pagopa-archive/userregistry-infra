@@ -14,8 +14,8 @@ tags = {
 lock_enable = false
 
 # 🔐 key vault
-key_vault_name    = "kv-usrreg-uat-neu"
-key_vault_rg_name = "usrreg-u-sec-rg"
+key_vault_name    = "usrreg-u-kv-neu"
+key_vault_rg_name = "usrreg-u-sec-rg-neu"
 
 # ☁️ networking
 cidr_vnet              = ["10.1.0.0/16"]

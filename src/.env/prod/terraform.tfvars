@@ -13,8 +13,8 @@ tags = {
 lock_enable = true
 
 # 🔐 key vault
-key_vault_name    = "kv-usrreg-prod-weu"
-key_vault_rg_name = "usrreg-p-sec-rg"
+key_vault_name    = "usrreg-p-kv-weu"
+key_vault_rg_name = "usrreg-p-sec-rg-weu"
 
 # ☁️ networking
 cidr_vnet              = ["10.1.0.0/16"]
