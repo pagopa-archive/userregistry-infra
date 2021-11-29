@@ -30,21 +30,21 @@ module "apim_snet" {
 ###########################
 
 module "apim" {
-  source               = "git::https://github.com/pagopa/azurerm.git//api_management?ref=INFRA-316-azurerm-apim-redis-not-mandatory"
+  source = "git::https://github.com/pagopa/azurerm.git//api_management?ref=INFRA-316-azurerm-apim-redis-not-mandatory"
 
-  name                 = format("%s-apim", local.project)
+  name = format("%s-apim", local.project)
 
-  subnet_id            = module.apim_snet.id
-  location             = azurerm_resource_group.rg_api.location
-  resource_group_name  = azurerm_resource_group.rg_api.name
+  subnet_id           = module.apim_snet.id
+  location            = azurerm_resource_group.rg_api.location
+  resource_group_name = azurerm_resource_group.rg_api.name
 
   publisher_name       = var.apim_publisher_name
   publisher_email      = data.azurerm_key_vault_secret.apim_publisher_email.value
   sku_name             = var.apim_sku
   virtual_network_type = "Internal"
 
-#   redis_connection_string = module.redis.primary_connection_string
-#   redis_cache_id          = module.redis.id
+  #   redis_connection_string = module.redis.primary_connection_string
+  #   redis_cache_id          = module.redis.id
 
   # This enables the Username and Password Identity Provider
   sign_up_enabled = false
@@ -59,16 +59,16 @@ module "apim" {
 
   application_insights_instrumentation_key = data.azurerm_application_insights.application_insights.instrumentation_key
 
-#   xml_content = templatefile("./api/base_policy.tpl", {
-#     origins = local.origins.base
-#   })
+  #   xml_content = templatefile("./api/base_policy.tpl", {
+  #     origins = local.origins.base
+  #   })
 
   tags = var.tags
 
-#   depends_on = [
-#     azurerm_application_insights.application_insights,
-#     module.redis
-#   ]
+  #   depends_on = [
+  #     azurerm_application_insights.application_insights,
+  #     module.redis
+  #   ]
 
 }
 
@@ -88,34 +88,34 @@ resource "azurerm_key_vault_access_policy" "api_management_policy" {
   storage_permissions     = []
 }
 
-#
-# 🏷 custom domain
-#
-resource "azurerm_api_management_custom_domain" "api_custom_domain" {
-  api_management_id = module.apim.id
+# #
+# # 🏷 custom domain
+# #
+# resource "azurerm_api_management_custom_domain" "api_custom_domain" {
+#   api_management_id = module.apim.id
 
-  proxy {
-    host_name = local.api_internal_domain
-    key_vault_id = replace(
-    data.azurerm_key_vault_certificate.apim_internal.secret_id,
-    "/${data.azurerm_key_vault_certificate.apim_internal.version}",
-    ""
-    )
-  }
-}
+#   proxy {
+#     host_name = local.api_internal_domain
+#     key_vault_id = replace(
+#       data.azurerm_key_vault_certificate.apim_internal.secret_id,
+#       "/${data.azurerm_key_vault_certificate.apim_internal.version}",
+#       ""
+#     )
+#   }
+# }
 
-data "azurerm_private_dns_zone" "internal" {
-  name                = join(".", ["internal", var.dns_zone_prefix, var.external_domain])
-  resource_group_name = data.azurerm_resource_group.rg_vnet.name
-}
+# data "azurerm_private_dns_zone" "internal" {
+#   name                = join(".", ["internal", var.dns_zone_prefix, var.external_domain])
+#   resource_group_name = data.azurerm_resource_group.rg_vnet.name
+# }
 
-# api.internal.*.userregistry.pagopa.it
-resource "azurerm_private_dns_a_record" "api_internal" {
-  name                = "api"
-  zone_name           = data.azurerm_private_dns_zone.internal.name
-  resource_group_name = data.azurerm_resource_group.rg_vnet.name
-  ttl                 = var.dns_default_ttl_sec
-  records             = module.apim.*.private_ip_addresses[0]
+# # api.internal.*.userregistry.pagopa.it
+# resource "azurerm_private_dns_a_record" "api_internal" {
+#   name                = "api"
+#   zone_name           = data.azurerm_private_dns_zone.internal.name
+#   resource_group_name = data.azurerm_resource_group.rg_vnet.name
+#   ttl                 = var.dns_default_ttl_sec
+#   records             = module.apim.*.private_ip_addresses[0]
 
-  tags = var.tags
-}
+#   tags = var.tags
+# }

@@ -1,13 +1,14 @@
-## Application gateway public ip ##
-resource "azurerm_public_ip" "appgateway_public_ip" {
-  name                = format("%s-appgateway-pip", local.project)
+data "azurerm_public_ip" "appgateway_public_ip" {
   resource_group_name = data.azurerm_resource_group.rg_vnet.name
-  location            = data.azurerm_resource_group.rg_vnet.location
-  sku                 = "Standard"
-  allocation_method   = "Static"
-
-  tags = var.tags
+  name                = format("%s-appgateway-pip", local.project)
 }
+
+data "azurerm_key_vault_certificate" "app_gw_api" {
+  name         = var.app_gateway_api_certificate_name
+  key_vault_id = data.azurerm_key_vault.kv.id
+}
+
+#--------------------------------------------------------------------------------------------------
 
 # Subnet to host the application gateway
 module "appgateway_snet" {
@@ -35,7 +36,7 @@ module "app_gw" {
 
   # Networking
   subnet_id    = module.appgateway_snet.id
-  public_ip_id = azurerm_public_ip.appgateway_public_ip.id
+  public_ip_id = data.azurerm_public_ip.appgateway_public_ip.id
 
   # Configure backends
   backends = {
@@ -259,11 +260,6 @@ resource "azurerm_key_vault_access_policy" "app_gateway_policy" {
   secret_permissions      = ["Get", "List"]
   certificate_permissions = ["Get", "List"]
   storage_permissions     = []
-}
-
-data "azurerm_key_vault_certificate" "app_gw_api" {
-  name         = var.app_gateway_api_certificate_name
-  key_vault_id = data.azurerm_key_vault.kv.id
 }
 
 # resource "azurerm_web_application_firewall_policy" "api" {

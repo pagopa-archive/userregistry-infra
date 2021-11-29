@@ -39,13 +39,18 @@ variable "tags" {
   }
 }
 
-# network
+# ☁️ network
 variable "cidr_vnet" {
   type        = list(string)
   description = "Virtual network address space."
 }
 
-# dns
+variable "cidr_subnet_postgres" {
+  type        = list(string)
+  description = "Database network address space."
+}
+
+# 🧵 dns
 variable "dns_default_ttl_sec" {
   type        = number
   description = "value"
@@ -64,13 +69,6 @@ variable "dns_zone_prefix" {
   description = "The dns subdomain."
 }
 
-# azure devops
-variable "azdo_sp_tls_cert_enabled" {
-  type        = string
-  description = "Enable Azure DevOps connection for TLS cert management"
-  default     = false
-}
-
 variable "enable_azdoa" {
   type        = bool
   description = "Enable Azure DevOps agent."
@@ -87,7 +85,7 @@ variable "enable_iac_pipeline" {
   default     = false
 }
 
-## Monitor
+## 🔭 Monitor
 variable "law_sku" {
   type        = string
   description = "Sku of the Log Analytics Workspace"
@@ -106,8 +104,49 @@ variable "law_daily_quota_gb" {
   default     = -1
 }
 
+# 🗄 Database server postgres
+variable "postgres_sku_name" {
+  type        = string
+  description = "Specifies the SKU Name for this PostgreSQL Server."
+}
+
+variable "postgres_private_endpoint_enabled" {
+  type        = bool
+  description = "Enable vnet private endpoint for postgres"
+}
+
+variable "postgres_public_network_access_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable/Disable public network access"
+}
+
+variable "postgres_network_rules" {
+  type = object({
+    ip_rules                       = list(string)
+    allow_access_to_azure_services = bool
+  })
+  default = {
+    ip_rules                       = []
+    allow_access_to_azure_services = false
+  }
+  description = "Database network rules"
+}
+
+variable "postgres_geo_redundant_backup_enabled" {
+  type        = bool
+  default     = false
+  description = "Turn Geo-redundant server backups on/off."
+}
+
+variable "postgres_alerts_enabled" {
+  type        = bool
+  default     = false
+  description = "Database alerts enabled?"
+}
+
 #
-# Key Vault
+# 🔐 Key Vault
 #
 variable "key_vault_name" {
   type        = string
@@ -122,7 +161,7 @@ variable "key_vault_rg_name" {
 }
 
 #
-# AKS
+# ⛴ AKS
 #
 variable "aks_num_outbound_ips" {
   type        = number

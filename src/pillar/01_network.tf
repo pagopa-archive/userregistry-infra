@@ -7,11 +7,22 @@ resource "azurerm_resource_group" "rg_vnet" {
 
 # vnet
 module "vnet" {
-  source              = "git::https://github.com/pagopa/azurerm.git//virtual_network?ref=v1.0.51"
+  source              = "git::https://github.com/pagopa/azurerm.git//virtual_network?ref=v2.0.2"
   name                = format("%s-vnet", local.project)
   location            = azurerm_resource_group.rg_vnet.location
   resource_group_name = azurerm_resource_group.rg_vnet.name
   address_space       = var.cidr_vnet
+
+  tags = var.tags
+}
+
+## Application gateway public ip ##
+resource "azurerm_public_ip" "appgateway_public_ip" {
+  name                = format("%s-appgateway-pip", local.project)
+  resource_group_name = azurerm_resource_group.rg_vnet.name
+  location            = azurerm_resource_group.rg_vnet.location
+  sku                 = "Standard"
+  allocation_method   = "Static"
 
   tags = var.tags
 }
