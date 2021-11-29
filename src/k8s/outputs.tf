@@ -9,5 +9,5 @@
 # }
 
 output "aks_fqdn" {
-    value = data.azurerm_kubernetes_cluster.aks_cluster.fqdn
+  value = data.azurerm_kubernetes_cluster.aks_cluster.fqdn
 }
