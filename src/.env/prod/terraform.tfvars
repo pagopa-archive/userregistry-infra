@@ -1,7 +1,7 @@
 # general
 env_short = "p"
 env       = "prod"
-location = "westeurope"
+location  = "westeurope"
 
 tags = {
   CreatedBy   = "Terraform"
@@ -13,7 +13,7 @@ tags = {
 lock_enable = true
 
 # 🔐 key vault
-key_vault_name    = "usrreg-p-kv-common"
+key_vault_name    = "kv-usrreg-prod-weu"
 key_vault_rg_name = "usrreg-p-sec-rg"
 
 # ☁️ networking
