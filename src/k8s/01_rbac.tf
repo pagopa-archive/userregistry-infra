@@ -18,6 +18,11 @@ data "azuread_group" "adgroup_technical_project_managers" {
   display_name = format("%s-adgroup-technical-project-managers", local.project)
 }
 
+locals {
+  kubernetes_app_namespace = kubernetes_namespace.usrreg.metadata[0].name
+}
+
+
 #--------------------------------------------------------------------------------------------------
 
 #
@@ -191,7 +196,7 @@ resource "kubernetes_cluster_role_binding" "edit_binding" {
 resource "kubernetes_role" "pod_reader" {
   metadata {
     name = "pod-reader"
-    namespace = kubernetes_namespace.selc.metadata[0].name
+    namespace = local.kubernetes_app_namespace
   }
 
   rule {
@@ -204,7 +209,7 @@ resource "kubernetes_role" "pod_reader" {
 resource "kubernetes_role_binding" "pod_reader" {
   metadata {
     name = "pod-reader"
-    namespace = kubernetes_namespace.selc.metadata[0].name
+    namespace = local.kubernetes_app_namespace
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -213,6 +218,6 @@ resource "kubernetes_role_binding" "pod_reader" {
   }
   subject {
     kind      = "User"
-    name      = format("system:serviceaccount:%s:default", kubernetes_namespace.selc.metadata[0].name)
+    name      = format("system:serviceaccount:%s:default", local.kubernetes_app_namespace)
   }
 }

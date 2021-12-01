@@ -10,7 +10,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2.6.1"
+      version = ">= 2.7.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -32,13 +32,13 @@ provider "kubernetes" {
   config_path = "${var.k8s_kube_config_path_prefix}/config-${data.azurerm_kubernetes_cluster.aks_cluster.name}"
 }
 
-# provider "helm" {
-#   kubernetes {
-#     host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
-#     insecure    = var.k8s_apiserver_insecure
-#     config_path = var.k8s_kube_config_path
-#   }
-# }
+provider "helm" {
+  kubernetes {
+    # host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
+    insecure    = var.k8s_apiserver_insecure
+      config_path = "${var.k8s_kube_config_path_prefix}/config-${data.azurerm_kubernetes_cluster.aks_cluster.name}"
+  }
+}
 
 provider "azurerm" {
   features {}
