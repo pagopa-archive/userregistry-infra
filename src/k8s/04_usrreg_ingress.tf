@@ -1,9 +1,9 @@
-# resource "kubernetes_ingress" "selc_ingress" {
+# resource "kubernetes_ingress" "usrreg_ingress" {
 #   depends_on = [helm_release.ingress]
 
 #   metadata {
-#     name      = "${kubernetes_namespace.selc.metadata[0].name}-ingress"
-#     namespace = kubernetes_namespace.selc.metadata[0].name
+#     name      = "${kubernetes_namespace.usrreg.metadata[0].name}-ingress"
+#     namespace = kubernetes_namespace.usrreg.metadata[0].name
 #     annotations = {
 #       "kubernetes.io/ingress.class"                = "nginx"
 #       "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
