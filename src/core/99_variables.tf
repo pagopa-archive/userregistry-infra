@@ -246,9 +246,9 @@ variable "aks_sku_tier" {
 }
 
 variable "aks_api_server_port" {
-  type = number
+  type        = number
   description = "Api server port"
-  default = 443
+  default     = 443
 }
 
 variable "reverse_proxy_ip" {
