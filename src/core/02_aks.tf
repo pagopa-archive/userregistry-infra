@@ -6,8 +6,8 @@ data "azurerm_public_ip" "aks_outbound" {
 }
 
 data "azurerm_container_registry" "acr" {
-  name                = var.docker_registry_name
-  resource_group_name = var.docker_registry_rg_name
+  name                = local.acr_docker_registry_name
+  resource_group_name = local.acr_docker_registry_rg_name
 }
 
 #--------------------------------------------------------------------------------------------------
