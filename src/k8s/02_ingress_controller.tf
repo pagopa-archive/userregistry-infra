@@ -4,20 +4,27 @@ module "nginx_ingress" {
   source  = "terraform-module/release/helm"
   version = "2.7.0"
 
-  namespace  = kubernetes_namespace.usrreg.metadata[0].name
+  namespace  = kubernetes_namespace.ingress.metadata[0].name
   repository = "https://kubernetes.github.io/ingress-nginx"
   app = {
-    name          = "ingress-nginx"
-    version       = "3.33.0"
+    name          = "nginx-ingress"
+    version       = var.nginx_helm_version
     chart         = "ingress-nginx"
     force_update  = true
-    wait          = false
+    wait          = true
     recreate_pods = false
     deploy        = 1
   }
 
   values = [
-    "${templatefile("${path.module}/ingress/loadbalancer.yaml.tpl", { load_balancer_ip = var.ingress_load_balancer_ip })}"
+    "${templatefile(
+      "${path.module}/ingress/loadbalancer.yaml.tpl",
+      {
+        load_balancer_ip         = var.ingress_load_balancer_ip
+        is_load_balancer_private = var.aks_private_cluster_enabled
+        public_ip_resource_group = local.public_ip_resource_group
+      }
+    )}"
   ]
 
   set = [
