@@ -36,7 +36,7 @@ provider "helm" {
   kubernetes {
     # host        = "https://${var.k8s_apiserver_host}:${var.k8s_apiserver_port}"
     insecure    = var.k8s_apiserver_insecure
-      config_path = "${var.k8s_kube_config_path_prefix}/config-${data.azurerm_kubernetes_cluster.aks_cluster.name}"
+    config_path = "${var.k8s_kube_config_path_prefix}/config-${data.azurerm_kubernetes_cluster.aks_cluster.name}"
   }
 }
 

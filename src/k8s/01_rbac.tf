@@ -195,20 +195,20 @@ resource "kubernetes_cluster_role_binding" "edit_binding" {
 # role required by interop services
 resource "kubernetes_role" "pod_reader" {
   metadata {
-    name = "pod-reader"
+    name      = "pod-reader"
     namespace = local.kubernetes_app_namespace
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["pods"]
-    verbs          = ["get", "watch", "list"]
+    api_groups = [""]
+    resources  = ["pods"]
+    verbs      = ["get", "watch", "list"]
   }
 }
 
 resource "kubernetes_role_binding" "pod_reader" {
   metadata {
-    name = "pod-reader"
+    name      = "pod-reader"
     namespace = local.kubernetes_app_namespace
   }
   role_ref {
@@ -217,7 +217,7 @@ resource "kubernetes_role_binding" "pod_reader" {
     name      = "pod-reader"
   }
   subject {
-    kind      = "User"
-    name      = format("system:serviceaccount:%s:default", local.kubernetes_app_namespace)
+    kind = "User"
+    name = format("system:serviceaccount:%s:default", local.kubernetes_app_namespace)
   }
 }

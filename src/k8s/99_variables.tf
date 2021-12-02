@@ -16,6 +16,25 @@ variable "env_short" {
   type = string
 }
 
+#
+# 🔐 Key Vault
+#
+variable "key_vault_name" {
+  type        = string
+  description = "Key Vault name"
+  default     = ""
+}
+
+variable "key_vault_rg_name" {
+  type        = string
+  default     = ""
+  description = "Key Vault - rg name"
+}
+
+#
+# ⛴ K8s
+#
+
 variable "k8s_kube_config_path_prefix" {
   type    = string
   default = "~/.kube"
@@ -35,10 +54,10 @@ variable "k8s_apiserver_insecure" {
   default = false
 }
 
-# variable "rbac_namespaces" {
-#   type    = list(string)
-#   default = ["selc"]
-# }
+variable "rbac_namespaces_for_deployer_binding" {
+  type        = list(string)
+  description = "Namespaces where to apply deployer binding rules"
+}
 
 # ingress
 
@@ -55,7 +74,7 @@ variable "default_service_port" {
   default = 8080
 }
 
-variable nginx_helm_version {
+variable "nginx_helm_version" {
   type        = string
   description = "NGINX helm verison"
 }
@@ -131,9 +150,6 @@ variable nginx_helm_version {
 #
 locals {
   project = format("%s-%s", var.prefix, var.env_short)
-  #   key_vault_name                  = format("%s-kv", local.project)
-  #   key_vault_resource_group        = format("%s-sec-rg", local.project)
-  #   key_vault_id                    = "${data.azurerm_subscription.current.id}/resourceGroups/${local.key_vault_resource_group}/providers/Microsoft.KeyVault/vaults/${local.key_vault_name}"
   #   redis_url                       = "${format("%s-redis", local.project)}.redis.cache.windows.net"
   #   postgres_hostname               = "${format("%s-postgresql", local.project)}.postgres.database.azure.com"
   #   postgres_replica_hostname       = var.enable_postgres_replica ? "${format("%s-postgresql-rep", local.project)}.postgres.database.azure.com" : local.postgres_hostname
