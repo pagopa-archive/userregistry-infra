@@ -97,6 +97,6 @@ resource "azurerm_role_assignment" "aks_to_acr" {
 
 resource "azurerm_key_vault_secret" "aks_apiserver_url" {
   name         = "aks-apiserver-url"
-  value        = module.aks.fqdn
+  value        = "https://${module.aks.fqdn}:${var.aks_api_server_port}"
   key_vault_id = data.azurerm_key_vault.kv.id
 }

@@ -245,6 +245,12 @@ variable "aks_sku_tier" {
   default     = "Free"
 }
 
+variable "aks_api_server_port" {
+  type = number
+  description = "Api server port"
+  default = 443
+}
+
 variable "reverse_proxy_ip" {
   type        = string
   default     = "127.0.0.1"
