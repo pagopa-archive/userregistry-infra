@@ -1,5 +1,6 @@
 # general
 env_short = "u"
+env       = "uat"
 location  = "northeurope"
 
 tags = {
@@ -12,9 +13,9 @@ tags = {
 
 lock_enable = false
 
-# key vault
-key_vault_name    = "usrreg-u-kv-common"
-key_vault_rg_name = "usrreg-u-sec-rg"
+# 🔐 key vault
+key_vault_name    = "usrreg-u-kv-neu"
+key_vault_rg_name = "usrreg-u-sec-rg-neu"
 
 # ☁️ networking
 cidr_vnet              = ["10.1.0.0/16"]

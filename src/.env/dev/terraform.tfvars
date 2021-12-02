@@ -1,5 +1,6 @@
 # general
 env_short = "d"
+env       = "dev"
 location  = "northeurope"
 
 tags = {
@@ -13,8 +14,8 @@ tags = {
 lock_enable = false
 
 # 🔐 key vault
-key_vault_name    = "usrreg-d-kv-common"
-key_vault_rg_name = "usrreg-d-sec-rg"
+key_vault_name    = "usrreg-d-kv-neu"
+key_vault_rg_name = "usrreg-d-sec-rg-neu"
 
 # ☁️ networking
 cidr_vnet              = ["10.1.0.0/16"]
