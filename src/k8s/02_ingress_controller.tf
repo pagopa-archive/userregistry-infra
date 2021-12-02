@@ -10,9 +10,6 @@ module "nginx_ingress" {
     name          = "nginx-ingress"
     version       = var.nginx_helm_version
     chart         = "ingress-nginx"
-    force_update  = true
-    wait          = true
-    recreate_pods = false
     deploy        = 1
   }
 
