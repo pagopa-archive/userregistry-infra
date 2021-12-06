@@ -103,6 +103,9 @@ variable "nginx_helm_version" {
 
 
 # # configs/secrets
+variable "configmaps_uservice-user-registry-management" {
+  type = map(string)
+}
 
 #
 # 🀄️ LOCALS
@@ -113,5 +116,9 @@ locals {
 
   load_balancer_ip = (
     var.ingress_load_balancer_private_ip_custom != "" && var.aks_private_cluster_enabled == true
-    ) ? var.ingress_load_balancer_private_ip_custom : var.ingress_load_balancer_public_ip
+   ) ? var.ingress_load_balancer_private_ip_custom : var.ingress_load_balancer_public_ip
+
+  key_vault_id                    = "${data.azurerm_subscription.current.id}/resourceGroups/${var.key_vault_rg_name}/providers/Microsoft.KeyVault/vaults/${var.key_vault_name}"
+  postgres_hostname               = "${local.project}-postgresql.postgres.database.azure.com"
+  appinsights_instrumentation_key = "InstrumentationKey=${module.key_vault_secrets_query.values["appinsights-instrumentation-key"].value}"
 }
