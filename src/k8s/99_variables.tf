@@ -75,14 +75,14 @@ variable "ingress_replica_count" {
 }
 
 variable "ingress_load_balancer_public_ip" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Ingress load balance public ip"
 }
 
 variable "ingress_load_balancer_private_ip_custom" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Ingress load balance private IP to create during helm installation"
 }
 
@@ -116,7 +116,7 @@ locals {
 
   load_balancer_ip = (
     var.ingress_load_balancer_private_ip_custom != "" && var.aks_private_cluster_enabled == true
-   ) ? var.ingress_load_balancer_private_ip_custom : var.ingress_load_balancer_public_ip
+  ) ? var.ingress_load_balancer_private_ip_custom : var.ingress_load_balancer_public_ip
 
   key_vault_id                    = "${data.azurerm_subscription.current.id}/resourceGroups/${var.key_vault_rg_name}/providers/Microsoft.KeyVault/vaults/${var.key_vault_name}"
   postgres_hostname               = "${local.project}-postgresql.postgres.database.azure.com"
