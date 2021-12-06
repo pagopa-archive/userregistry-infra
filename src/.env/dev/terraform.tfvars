@@ -18,13 +18,15 @@ key_vault_name    = "usrreg-d-kv-neu"
 key_vault_rg_name = "usrreg-d-sec-rg-neu"
 
 # ☁️ networking
-cidr_vnet              = ["10.1.0.0/16"]
-cidr_subnet_appgateway = ["10.1.128.0/24"]
-cidr_subnet_postgres   = ["10.1.129.0/24"]
-cidr_subnet_azdoa      = ["10.1.130.0/24"]
-cidr_subnet_cosmosdb   = ["10.1.131.0/24"]
-cidr_subnet_apim       = ["10.1.136.0/24"]
-cidr_subnet_k8s        = ["10.1.0.0/17"]
+cidr_vnet                 = ["10.1.0.0/16"]
+cidr_subnet_appgateway    = ["10.1.128.0/24"]
+cidr_subnet_postgres      = ["10.1.129.0/24"]
+cidr_subnet_azdoa         = ["10.1.130.0/24"]
+cidr_subnet_cosmosdb      = ["10.1.131.0/24"]
+cidr_subnet_vpn           = ["10.1.133.0/24"]
+cidr_subnet_dns_forwarder = ["10.1.134.0/29"]
+cidr_subnet_apim          = ["10.1.136.0/24"]
+cidr_subnet_k8s           = ["10.1.0.0/17"]
 
 # dns
 dns_zone_prefix = "dev.userregistry"
