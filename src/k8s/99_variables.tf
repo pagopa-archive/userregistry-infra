@@ -74,8 +74,16 @@ variable "ingress_replica_count" {
   type = string
 }
 
-variable "ingress_load_balancer_ip" {
+variable "ingress_load_balancer_public_ip" {
   type = string
+  default = ""
+  description = "Ingress load balance public ip"
+}
+
+variable "ingress_load_balancer_private_ip_custom" {
+  type = string
+  default = ""
+  description = "Ingress load balance private IP to create during helm installation"
 }
 
 variable "default_service_port" {
@@ -102,4 +110,8 @@ variable "nginx_helm_version" {
 locals {
   project                  = "${var.prefix}-${var.env_short}"
   public_ip_resource_group = "${var.prefix}-${var.env_short}-vnet-rg"
+
+  load_balancer_ip = (
+    var.ingress_load_balancer_private_ip_custom != "" && var.aks_private_cluster_enabled == true
+    ) ? var.ingress_load_balancer_private_ip_custom : var.ingress_load_balancer_public_ip
 }
