@@ -4,7 +4,7 @@ prefix = "usrreg"
 nginx_helm_version                      = "4.0.12"
 ingress_replica_count                   = "2"
 ingress_load_balancer_public_ip         = "20.82.206.96"
-ingress_load_balancer_private_ip_custom = ""
+ingress_load_balancer_private_ip = ""
 
 # RBAC
 rbac_namespaces_for_deployer_binding = ["usrreg"]

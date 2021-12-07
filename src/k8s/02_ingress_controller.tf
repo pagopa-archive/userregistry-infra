@@ -20,7 +20,7 @@ module "nginx_ingress" {
       {
         load_balancer_ip         = local.load_balancer_ip
         is_load_balancer_private = var.aks_private_cluster_enabled
-        public_ip_resource_group = local.public_ip_resource_group
+        public_ip_resource_group_name = local.public_ip_resource_group_name
       }
     )}"
   ]
