@@ -38,6 +38,11 @@ if [ -z "${DATABASE}" ]; then
     exit 1
 fi
 
+if [[ $WORKDIR == /cygdrive/* ]]; then
+  WORKDIR=$(cygpath -w "${WORKDIR}")
+  WORKDIR=${WORKDIR//\\//}
+fi
+
 #
 # 🏁 Setup
 #
@@ -62,9 +67,12 @@ kv_key_postgres_user_registry_user_password="postgres-user-registry-user-passwor
 kv_key_postgres_monitoring_user_password="postgres-monitoring-user-password"
 kv_key_postgres_monitoring_external_user_password="postgres-monitoring-external-user-password"
 
-psql_server_name=$(az postgres server list -o tsv --query "[?contains(name,'postgresql')].{Name:name}" | head -1)
-psql_server_private_fqdn=$(az postgres server list -o tsv --query "[?contains(name,'postgresql')].{Name:fullyQualifiedDomainName}" | head -1)
+psql_server_name=$(az postgres server list -o tsv --query "[?contains(name,'postgres')].{Name:name}" | head -1)
+echo "[INFO] psql_server_name: ${psql_server_name}"
+psql_server_private_fqdn=$(az postgres server list -o tsv --query "[?contains(name,'postgres')].{Name:fullyQualifiedDomainName}" | head -1)
+echo "[INFO] psql_server_private_fqdn: ${psql_server_private_fqdn}"
 keyvault_name=$(az keyvault list -o tsv --query "[?contains(name,'kv')].{Name:name}")
+echo "[INFO] keyvault_name: ${keyvault_name}"
 
 # in widows, even if using cygwin, these variables will contain a landing \r character
 psql_server_name=${psql_server_name//[$'\r']}
@@ -72,15 +80,20 @@ psql_server_private_fqdn=${psql_server_private_fqdn//[$'\r']}
 keyvault_name=${keyvault_name//[$'\r']}
 
 administrator_login=$(az keyvault secret show --name ${kv_key_postgres_administrator_login} --vault-name "${keyvault_name}" -o tsv --query value)
+echo "[INFO] administrator_login: ${administrator_login}"
 administrator_login_password=$(az keyvault secret show --name ${kv_key_postgres_administrator_login_password} --vault-name "${keyvault_name}" -o tsv --query value)
+echo "[INFO] administrator_login: ${administrator_login_password}"
 
 # in widows, even if using cygwin, these variables will contain a landing \r character
 administrator_login=${administrator_login//[$'\r']}
 administrator_login_password=${administrator_login_password//[$'\r']}
 
 user_registry_user_password=$(az keyvault secret show --name ${kv_key_postgres_user_registry_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
+echo "[INFO] user_registry_user_password: ${user_registry_user_password}"
 monitoring_user_password=$(az keyvault secret show --name ${kv_key_postgres_monitoring_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
+echo "[INFO] monitoring_user_password: ${monitoring_user_password}"
 monitoring_external_user_password=$(az keyvault secret show --name ${kv_key_postgres_monitoring_external_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
+echo "[INFO] monitoring_external_user_password: ${monitoring_external_user_password}"
 
 # in widows, even if using cygwin, these variables will contain a landing \r character
 user_registry_user_password=${user_registry_user_password//[$'\r']}
@@ -99,11 +112,6 @@ export FLYWAY_DOCKER_TAG="7.11.1-alpine"
 export USER_REGISTRY_USER_PASSWORD="${user_registry_user_password}"
 export MONITORING_USER_PASSWORD="${monitoring_user_password}"
 export MONITORING_EXTERNAL_USER_PASSWORD="${monitoring_external_user_password}"
-
-if [[ $WORKDIR == /cygdrive/* ]]; then
-  WORKDIR=$(cygpath -w "${WORKDIR}")
-  WORKDIR=${WORKDIR//\\//}
-fi
 
 docker run --rm --network=host -v "${WORKDIR}/migrations/${DATABASE}":/flyway/sql \
   flyway/flyway:"${FLYWAY_DOCKER_TAG}" \
