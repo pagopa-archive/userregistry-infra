@@ -22,8 +22,8 @@ terraform {
 }
 
 data "azurerm_kubernetes_cluster" "aks_cluster" {
-  name                = "usrreg-${var.env_short}-aks"
-  resource_group_name = "usrreg-${var.env_short}-aks-rg"
+  name                = "${local.project}-aks"
+  resource_group_name = "${local.project}-aks-rg"
 }
 
 provider "kubernetes" {
