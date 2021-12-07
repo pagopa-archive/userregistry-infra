@@ -64,17 +64,6 @@ resource "kubernetes_cluster_role" "cluster_deployer" {
     verbs      = ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
   }
 
-  rule {
-    api_groups = [""]
-    resources  = ["pods"]
-    verbs      = ["get", "watch", "list"]
-  }
-
-  rule {
-    api_groups = ["rbac.authorization.k8s.io"]
-    resources  = ["rolebindings", "roles"]
-    verbs      = ["create", "get", "watch", "list", "patch", "update"]
-  }
 }
 
 resource "kubernetes_role_binding" "deployer_binding" {
