@@ -55,6 +55,12 @@ resource "kubernetes_cluster_role" "cluster_deployer" {
     resources  = ["deployments"]
     verbs      = ["get", "list", "watch", "create", "update", "patch", "delete"]
   }
+
+  rule {
+    api_groups = ["networking.k8s.io"]
+    resources  = ["ingresses"]
+    verbs      = ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+  }
 }
 
 resource "kubernetes_role_binding" "deployer_binding" {
