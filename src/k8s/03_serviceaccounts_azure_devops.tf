@@ -17,6 +17,8 @@ data "kubernetes_secret" "azure_devops_secret" {
   }
 }
 
+#--------------------------------------------------------------------------------------------------
+
 #tfsec:ignore:AZU023
 resource "azurerm_key_vault_secret" "azure_devops_sa_token" {
   depends_on   = [kubernetes_service_account.azure_devops]

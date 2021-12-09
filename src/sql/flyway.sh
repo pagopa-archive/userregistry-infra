@@ -82,18 +82,18 @@ keyvault_name=${keyvault_name//[$'\r']}
 administrator_login=$(az keyvault secret show --name ${kv_key_postgres_administrator_login} --vault-name "${keyvault_name}" -o tsv --query value)
 echo "[INFO] administrator_login: ${administrator_login}"
 administrator_login_password=$(az keyvault secret show --name ${kv_key_postgres_administrator_login_password} --vault-name "${keyvault_name}" -o tsv --query value)
-echo "[INFO] administrator_login: ${administrator_login_password}"
+echo "[INFO] administrator_login_password result code: $?"
 
 # in widows, even if using cygwin, these variables will contain a landing \r character
 administrator_login=${administrator_login//[$'\r']}
 administrator_login_password=${administrator_login_password//[$'\r']}
 
 user_registry_user_password=$(az keyvault secret show --name ${kv_key_postgres_user_registry_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
-echo "[INFO] user_registry_user_password: ${user_registry_user_password}"
+echo "[INFO] user_registry_user_password result code: $?"
 monitoring_user_password=$(az keyvault secret show --name ${kv_key_postgres_monitoring_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
-echo "[INFO] monitoring_user_password: ${monitoring_user_password}"
+echo "[INFO] monitoring_user_password result code: $?"
 monitoring_external_user_password=$(az keyvault secret show --name ${kv_key_postgres_monitoring_external_user_password} --vault-name "${keyvault_name}" -o tsv --query value)
-echo "[INFO] monitoring_external_user_password: ${monitoring_external_user_password}"
+echo "[INFO] monitoring_external_user_password result code: $?"
 
 # in widows, even if using cygwin, these variables will contain a landing \r character
 user_registry_user_password=${user_registry_user_password//[$'\r']}
