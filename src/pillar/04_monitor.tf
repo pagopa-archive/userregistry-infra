@@ -72,16 +72,12 @@ locals {
 
   test_urls = [
     {
-      host                 = trimsuffix(azurerm_dns_a_record.dns_a_api.fqdn, "."),
+      host                 = trimsuffix(azurerm_dns_a_record.api_userregistry_pagopa_it.fqdn, "."),
       path                 = "/",
-      expected_http_status = 200
+      expected_http_status = 401
     },
     ## CDN custom domains ##
-    {
-      host                 = trimsuffix(module.checkout_cdn.fqdn, "."),
-      path                 = "/auth/login",
-      expected_http_status = 200
-    },
+    # NO CDNs
   ]
 
 }
