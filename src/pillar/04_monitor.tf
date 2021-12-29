@@ -73,7 +73,7 @@ locals {
   test_urls = [
     {
       host                 = trimsuffix(azurerm_dns_a_record.api_userregistry_pagopa_it.fqdn, "."),
-      path                 = "/",
+      path                 = "/user-registry-management/v1/status",
       expected_http_status = 401
     },
     ## CDN custom domains ##
