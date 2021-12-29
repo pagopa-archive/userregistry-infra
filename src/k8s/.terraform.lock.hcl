@@ -21,27 +21,27 @@ provider "registry.terraform.io/hashicorp/azuread" {
 }
 
 provider "registry.terraform.io/hashicorp/azurerm" {
-  version     = "2.86.0"
-  constraints = "2.86.0"
+  version     = "2.90.0"
+  constraints = "2.90.0"
   hashes = [
-    "h1:t/WbhWPMCBelXD7TRe1IRQQ8Vs0iVJaK1MZrWSzqq4Q=",
-    "zh:1568f5eb15da2e4fc31c0c63c56471825f875a5fe3ee2f12be3221e91089f268",
-    "zh:227cd0562f950319dc13d2bf57d921f7fada2fe864bff98572db21ed1c1cfc6e",
-    "zh:29c04e7315b543abd2f731334a478ff13c346ce4b178b3752d6cd3e9476ba9ae",
-    "zh:2da6f960982481bd5f67fa7624d777048d6dcd84489a9df8e4559a55d39280bd",
-    "zh:48c94689abcb0d562bd32650adf3b3c7310cba8703a22a7028ceaa378ad27a69",
-    "zh:494e7dc72ee869d2cacd36a4155f9c81f940c82b0a68023c36e25ba1e82fbcda",
-    "zh:828397e790a3825ffdaec2aadd5dc4d2129b01c14d9307aebfb20c4c2086fb9c",
-    "zh:8ca3147360ee049906f1b95a1c3aeddc05cf37b24d51576be5393b7ad926fdcf",
-    "zh:a82bf92054203cbf5829ecdb795181ce6984f3550366d49e808840766a4cd8de",
-    "zh:de097fdb2295ee1c374c06966f101cdf4c176b8cfac8ca56eb708071c0605e0c",
-    "zh:f9cbd78d989aeef10f38cdbab5fac83d8a5a604e338b90455d8e2e7d3226ddcf",
+    "h1:j2SkWgabdECJo8vGy5Q/cTLF3yVaWR1kRaO/Nopb2VY=",
+    "zh:11e484585bc324e56ece3d75bd1d8371fc1d56501fb7f15542be0185eaf2c05e",
+    "zh:189f11bba0665a45405d12b66ac789de87582d23863f0599016bcc28f399a4e3",
+    "zh:1e4103ab153f16b614c98898d4f4d46c953687a35a0381e05b4a2958b27165b8",
+    "zh:1f8bb4631f8206736e1ff560b59453d9cc6d7dd0598072feaba10b6833cda1c4",
+    "zh:424acd64ee42cf3cc78919dc32b07a8dc4e7e9cc103eca37cce2f256a48f5e6d",
+    "zh:4ce7c5469e1fbed3066bb05c3c4ad8a194b76a4d01e2bbd7093537aa3eafeb0a",
+    "zh:6b4b592f1f3684a4df9fad146b4cbe125fffbadc2239f7011c0390199094676f",
+    "zh:8525bb868cd3e117fb1278e54c899a22ab6533c134779a64c224e651983fc253",
+    "zh:9873ee69ee94059af70ee544e0b27b68064dcc21e4d2912aa7186f46acca47c1",
+    "zh:af305aa28b532c78a1c51cf707a02bd1993ff1b8e7b5d656db8043c3eb484eab",
+    "zh:f96ecf6c3f208ad50af0959042e5fe1730b2bf26582430a61aac5b2a970917c7",
   ]
 }
 
 provider "registry.terraform.io/hashicorp/helm" {
   version     = "2.4.1"
-  constraints = ">= 2.4.1"
+  constraints = ">= 2.0.0, >= 2.4.1"
   hashes = [
     "h1:CLb4n9f/hLyqqq0zbc+h5SuNOB7KnO65qOOb+ohwsKA=",
     "zh:07517b24ea2ce4a1d3be3b88c3efc7fb452cd97aea8fac93ca37a08a8ec06e14",
@@ -59,20 +59,20 @@ provider "registry.terraform.io/hashicorp/helm" {
 }
 
 provider "registry.terraform.io/hashicorp/kubernetes" {
-  version     = "2.7.0"
+  version     = "2.7.1"
   constraints = ">= 2.7.0"
   hashes = [
-    "h1:25AS3IS7uBb/Fm/pdjGJbXkrzTujuLfnhQ5WaAY5bYU=",
-    "zh:0ee4ed19d951cf94a1b27bf813827bb5c51b48ac53efe827e77aa077e9d66021",
-    "zh:134ae78a19a43f94c2958e87ee8c6c1ae4593c145569bf71bf58a357882c18af",
-    "zh:191345c9c0808499378d6ac33237f41d4509769b06367630acbf1586e0fe1540",
-    "zh:1c058459ca1705dd97646d06c02df648a19a12789024a16155209bbdd75d03d6",
-    "zh:33ac31a72649b85962cf3404edd08e917704b225eb4064d63cfee5704635da56",
-    "zh:3dcc51d76711ff58d77a42811d8f65834fdb3632d44f56f2fe58eaca07c83a8a",
-    "zh:5d5ea922c72d2eb4abc67d9a34fcf92b3af33049325bb7384e772a9db90120dd",
-    "zh:9b02cda7aad45408fa2acbc844505d6a72c3998eb28e3568c1d35e142acd1ffd",
-    "zh:b7f4652ec526bc3e7a846a40b136dc4d1d873f643329056eeb8b7ac5dfb4e11e",
-    "zh:c8d1617426ca3d91bc0c5188f353dbca55ca777c28830e9bb0b79baef227885e",
-    "zh:ed7064a03e15ca6b2f026064f17fa3956775e34a930e5265399ffa7f6ef22ded",
+    "h1:/zifejk3MfLSDQr5J6sc3EHrnFwAVEDH9LrewWMRqe4=",
+    "zh:0da320fd81ece6696f7cceda35e459ee97cae8955088af38fc7f2feab1dce924",
+    "zh:37d304b8b992518c9c12e8f10437b9d4a0cc5a823c9421ac794ad2347c4d1122",
+    "zh:3d4e12fb9588c3b2e782d392fea758c6982e5d653154bec951e949155bcbc169",
+    "zh:6bb32b8d5cccf3e3ae7c124ed27df76dc7653ca760c132addeee15272630c930",
+    "zh:94775153b90e285876fc17261e8f5338a1ff732f4133336cc68754acb74570b6",
+    "zh:a665d1336765cdf8620a8797fd4e7e3cecf789e96e59ba80634336a4390df377",
+    "zh:aa8b35e9958cb89f01c115e8866a07d5468fb53f1c227d673e94f7ee8fb76242",
+    "zh:b7a571336387d773a74ed6eefa3843ff78d3662f2745c99c95008002a1341662",
+    "zh:c50d661782175d50ea4952fe943b0e4a3e33c27aa69e5ff21b3cbfa513e90d0a",
+    "zh:e0999b349cc772c75876adbc2a13b5dc256d3ecd7e4aa91baee5fdfcecaa7465",
+    "zh:e1399aec06a7aa98e9b0f64b4281697247f338a8a40b79f5f6ebfd43bf4ce1e2",
   ]
 }
