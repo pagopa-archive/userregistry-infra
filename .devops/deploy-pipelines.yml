@@ -45,7 +45,7 @@ stages:
     dependsOn: []
     condition: and(succeeded(), eq(${{parameters.DEV}}, true))
     pool:
-      name: product-dev-linux
+      name: usrreg-dev-linux
     jobs:
       - job: plan
         timeoutInMinutes: $[variables.TIME_OUT]
@@ -55,7 +55,7 @@ stages:
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
-              SUBSCRIPTION: DEV-PRODUCT-SERVICE-CONN
+              SUBSCRIPTION: DEV-SERVICE-CONN
               ENVIRONMENT: dev
               WORKINGDIR: 'src/core'
 
@@ -63,7 +63,7 @@ stages:
     dependsOn: [plan_DEV]
     condition: and(succeeded(), eq(${{parameters.DEV}}, true))
     pool:
-      name: product-dev-linux
+      name: usrreg-dev-linux
     jobs:
       # - job: init
       #   steps:
@@ -81,7 +81,7 @@ stages:
                 # 3. Run terraform apply
                 - template: templates/terraform-apply/template.yaml@terraform
                   parameters:
-                    SUBSCRIPTION: DEV-PRODUCT-SERVICE-CONN
+                    SUBSCRIPTION: DEV-SERVICE-CONN
                     ENVIRONMENT: dev
                     WORKINGDIR: 'src/core'
 
@@ -90,7 +90,7 @@ stages:
     dependsOn: []
     condition: and(succeeded(), eq(${{parameters.UAT}}, true))
     pool:
-      name: product-uat-linux
+      name: usrreg-uat-linux
     jobs:
       - job: plan
         timeoutInMinutes: $[variables.TIME_OUT]
@@ -100,7 +100,7 @@ stages:
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
-              SUBSCRIPTION: UAT-PRODUCT-SERVICE-CONN
+              SUBSCRIPTION: UAT-SERVICE-CONN
               ENVIRONMENT: uat
               WORKINGDIR: 'src/core'
 
@@ -108,7 +108,7 @@ stages:
     dependsOn: [plan_UAT]
     condition: and(succeeded(), eq(${{parameters.UAT}}, true))
     pool:
-      name: product-uat-linux
+      name: usrreg-uat-linux
     jobs:
       # - job: init
       #   steps:
@@ -126,7 +126,7 @@ stages:
                 # 3. Run terraform apply
                 - template: templates/terraform-apply/template.yaml@terraform
                   parameters:
-                    SUBSCRIPTION: UAT-PRODUCT-SERVICE-CONN
+                    SUBSCRIPTION: UAT-SERVICE-CONN
                     ENVIRONMENT: uat
                     WORKINGDIR: 'src/core'
 
@@ -135,7 +135,7 @@ stages:
     dependsOn: []
     condition: and(succeeded(), eq(${{parameters.PROD}}, true))
     pool:
-      name: product-prod-linux
+      name: usrreg-prod-linux
     jobs:
       - job: plan
         timeoutInMinutes: $[variables.TIME_OUT]
@@ -145,7 +145,7 @@ stages:
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
-              SUBSCRIPTION: PROD-PRODUCT-SERVICE-CONN
+              SUBSCRIPTION: PROD-SERVICE-CONN
               ENVIRONMENT: prod
               WORKINGDIR: 'src/core'
 
@@ -153,7 +153,7 @@ stages:
     dependsOn: [plan_PROD]
     condition: and(succeeded(), eq(${{parameters.PROD}}, true))
     pool:
-      name: product-prod-linux
+      name: usrreg-prod-linux
     jobs:
       # - job: init
       #   steps:
@@ -171,6 +171,6 @@ stages:
                 # 3. Run terraform apply
                 - template: templates/terraform-apply/template.yaml@terraform
                   parameters:
-                    SUBSCRIPTION: PROD-PRODUCT-SERVICE-CONN
+                    SUBSCRIPTION: PROD-SERVICE-CONN
                     ENVIRONMENT: prod
                     WORKINGDIR: 'src/core'
