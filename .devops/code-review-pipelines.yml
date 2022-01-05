@@ -57,6 +57,7 @@ stages:
       - job: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
@@ -68,6 +69,7 @@ stages:
         dependsOn: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
