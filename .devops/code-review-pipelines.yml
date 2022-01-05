@@ -54,14 +54,7 @@ stages:
     pool:
       name: usrreg-dev-linux
     jobs:
-      - job: terraform_install
-        strategy:
-          parallel: 2
-        steps:
-          # 1. Install terraform 
-          - template: templates/terraform-setup/template.yaml@terraform
       - job: terraform_plan_pillar
-        dependsOn: terraform_install
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
           - checkout: self
@@ -72,7 +65,7 @@ stages:
               ENVIRONMENT: dev
               WORKINGDIR: 'src/pillar'
       - job: terraform_plan_core
-        dependsOn: terraform_install
+        dependsOn: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
           - checkout: self
