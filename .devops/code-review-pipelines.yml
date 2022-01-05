@@ -55,6 +55,8 @@ stages:
       name: usrreg-dev-linux
     jobs:
       - job: terraform_install
+        strategy:
+          parallel: 2
         steps:
           # 1. Install terraform 
           - template: templates/terraform-setup/template.yaml@terraform
