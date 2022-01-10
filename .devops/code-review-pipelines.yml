@@ -44,7 +44,7 @@ resources:
     - repository: terraform
       type: github
       name: pagopa/azure-pipeline-templates
-      ref: INFRA-391-azuredevops-create-iac-pipelines
+      ref: v19
       endpoint: 'azure-devops-github-ro'
 
 stages:
