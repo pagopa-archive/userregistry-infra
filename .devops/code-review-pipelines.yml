@@ -57,8 +57,8 @@ stages:
       - job: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
@@ -68,8 +68,8 @@ stages:
       - job: terraform_plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
@@ -86,8 +86,8 @@ stages:
       - job: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
@@ -97,8 +97,8 @@ stages:
       - job: terraform_plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
@@ -115,8 +115,8 @@ stages:
       - job: terraform_plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
@@ -126,8 +126,8 @@ stages:
       - job: terraform_plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
-          - template: templates/terraform-setup/template.yaml@terraform
           - checkout: self
+          - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
           - template: templates/terraform-plan/template.yaml@terraform
             parameters:
