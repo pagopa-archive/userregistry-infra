@@ -79,15 +79,6 @@ stages:
     pool:
       name: usrreg-dev-linux
     jobs:
-      - job: wait_for_validation
-        displayName: Wait for external validation
-        timeoutInMinutes: 1440 # job times out in 3 days
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 1440 # task times out in 1 day
-          inputs:
-            instructions: 'Do you want to continue with the apply?'
-            onTimeout: 'reject'
       - deployment: apply_pillar
         continueOnError: false
         # dependsOn: init
@@ -161,15 +152,6 @@ stages:
     pool:
       name: usrreg-uat-linux
     jobs:
-      - job: wait_for_validation
-        displayName: Wait for external validation
-        timeoutInMinutes: 1440 # job times out in 3 days
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 1440 # task times out in 1 day
-          inputs:
-            instructions: 'Do you want to continue with the apply?'
-            onTimeout: 'reject'
       - deployment: apply_pillar
         continueOnError: false
         # dependsOn: init
@@ -243,15 +225,6 @@ stages:
     pool:
       name: usrreg-prod-linux
     jobs:
-      - job: wait_for_validation
-        displayName: Wait for external validation
-        timeoutInMinutes: 1440 # job times out in 3 days
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 1440 # task times out in 1 day
-          inputs:
-            instructions: 'Do you want to continue with the apply?'
-            onTimeout: 'reject'
       - deployment: apply_pillar
         continueOnError: false
         # dependsOn: init
