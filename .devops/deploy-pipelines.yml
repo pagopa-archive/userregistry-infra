@@ -50,6 +50,7 @@ stages:
       - job: plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
@@ -61,6 +62,7 @@ stages:
       - job: plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
@@ -117,6 +119,7 @@ stages:
       - job: plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
@@ -128,6 +131,7 @@ stages:
       - job: plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
@@ -184,6 +188,7 @@ stages:
       - job: plan_pillar
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
@@ -195,6 +200,7 @@ stages:
       - job: plan_core
         timeoutInMinutes: $[variables.TIME_OUT]
         steps:
+          - checkout: self
           # 1. Install terraform
           - template: templates/terraform-setup/template.yaml@terraform
           # 2. Run terraform plan
